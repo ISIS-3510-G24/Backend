@@ -5,7 +5,7 @@ import { OrderModule } from './modules/order/order.module';
 import { UsersModule } from './modules/users/users.module';
 import { ProductsModule } from './modules/products/products.module';
 import { ReviewsModule } from './modules/reviews/reviews.module';
-import { ProductRequestModule } from './modules/product-request/product-request.module';
+import { ProductRequestModule } from './modules/product_request/product_request.module';
 
 
 @Module({
