@@ -12,7 +12,7 @@ export class ShoppingBagController {
         }
     
         @Get(':id')
-        async getShoppingBagById(@Param('id') id: string): Promise<ShoppingBag> {
+        async getShoppingBagById(@Param('id') id: string): Promise<ShoppingBag | null> {
             return this.shoppingBagService.getShoppingBagById(id);
         }
     
@@ -20,10 +20,21 @@ export class ShoppingBagController {
         async updateShoppingBag(@Param('id') id: string, @Body() data: Partial<ShoppingBag>): Promise<void> {
             await this.shoppingBagService.updateShoppingBag(id, data);
         }
+
+        @Put(':id/order/:orderId')
+        async linkBagToOrder(@Param('id') bagId: string, @Param('orderId') orderId: string): Promise<void> {
+            await this.shoppingBagService.linkBagToOrder(bagId, orderId);
+        }
+        
     
         @Delete(':id')
         async deleteShoppingBag(@Param('id') id: string): Promise<void> {
             await this.shoppingBagService.deleteShoppingBag(id);
+        }
+
+        @Delete(':id/order')
+        async unlinkBagFromOrder(@Param('id') bagId: string): Promise<void> {
+            await this.shoppingBagService.unlinkBagFromOrder(bagId);
         }
     
         @Put(':id/product/:productId')
