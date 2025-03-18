@@ -6,10 +6,11 @@ import { UsersModule } from './modules/users/users.module';
 import { ProductsModule } from './modules/products/products.module';
 import { ReviewsModule } from './modules/reviews/reviews.module';
 import { ProductRequestModule } from './modules/product_request/product_request.module';
+import { ShoppingBagModule } from './modules/shopping_bag/shopping_bag.module';
 
 
 @Module({
-  imports: [UsersModule, ProductsModule, ReviewsModule, OrderModule, ProductRequestModule],
+  imports: [UsersModule, ProductsModule, ReviewsModule, OrderModule, ProductRequestModule, ShoppingBagModule],
   controllers: [AppController],
   providers: [AppService],
 })
