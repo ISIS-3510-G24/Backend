@@ -8,6 +8,7 @@ import { ProductRequestModule } from './modules/product_request/product_request.
 import { NotificationAdModule } from './modules/notification_ad/notification_ad.module';
 import { UniandesClassModule } from './modules/uniandes_class/uniandes_class.module';
 import { ShoppingBagModule } from './modules/shopping_bag/shopping_bag.module';
+import { OrderModule } from './modules/order/order.module';
 
 @Module({
   imports: [UsersModule, ProductsModule, ReviewsModule, OrderModule, ProductRequestModule, NotificationAdModule, UniandesClassModule, ShoppingBagModule],
