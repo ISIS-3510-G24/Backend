@@ -37,4 +37,18 @@ export class UsersService {
             reviews: admin.firestore.FieldValue.arrayRemove(reviewId)
         });
     }
+
+    async addToWhishlist(userId: string, productId: string): Promise<void> {
+        const userRef = this.db.collection('users').doc(userId);
+        await userRef.update({
+            wishlists: admin.firestore.FieldValue.arrayUnion(productId)
+        });
+    }
+
+    async removeFromWhishlist(userId: string, productId: string): Promise<void> {
+        const userRef = this.db.collection('users').doc(userId);
+        await userRef.update({
+            wishlists: admin.firestore.FieldValue.arrayRemove(productId)
+        });
+    }
 }
