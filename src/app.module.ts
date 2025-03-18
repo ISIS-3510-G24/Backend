@@ -8,7 +8,7 @@ import { ReviewsModule } from './modules/reviews/reviews.module';
 
 
 @Module({
-  imports: [UsersModule, ProductsModule, ReviewsModule],
+  imports: [UsersModule, ProductsModule, ReviewsModule, OrderModule],
   controllers: [AppController],
   providers: [AppService],
 })
