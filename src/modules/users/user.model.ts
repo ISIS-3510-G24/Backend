@@ -1,14 +1,14 @@
 import { UserState, SubscriptionStatus } from '../../common/enums';
 
 export class User {
-    id: number;
+    id: string;
     username: string;
     password: string;
     mail_address: string;
     profile_Picture: string;
     user_rating: number;
-    wishlists: number[];
+    wishlists: string[];
+    reviews: string[];
     status: UserState;
     subscription: SubscriptionStatus;
-  }
-  
+}
