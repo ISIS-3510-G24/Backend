@@ -35,4 +35,14 @@ export class UsersController {
     async removeReviewFromUser(@Param('id') userId: string, @Param('reviewId') reviewId: string): Promise<void> {
         return this.usersService.removeReviewFromUser(userId, reviewId);
     }
+
+    @Put(':id/wishlist/:productId')
+    async addToWhishlist(@Param('id') userId: string, @Param('productId') productId: string): Promise<void> {
+        return this.usersService.addToWhishlist(userId, productId);
+    }
+
+    @Delete(':id/wishlist/:productId')
+    async removeFromWhishlist(@Param('id') userId: string, @Param('productId') productId: string): Promise<void> {
+        return this.usersService.removeFromWhishlist(userId, productId);
+    }
 }
