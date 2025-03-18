@@ -25,3 +25,4 @@ export class FirebaseService {
   public getFirestore(): FirebaseFirestore.Firestore {
     return this.db;
   }
+}
