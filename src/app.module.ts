@@ -7,10 +7,11 @@ import { ProductsModule } from './modules/products/products.module';
 import { ReviewsModule } from './modules/reviews/reviews.module';
 import { ProductRequestModule } from './modules/product_request/product_request.module';
 import { NotificationAdModule } from './modules/notification_ad/notification_ad.module';
+import { UniandesClassModule } from './modules/uniandes_class/uniandes_class.module';
 
 
 @Module({
-  imports: [UsersModule, ProductsModule, ReviewsModule, OrderModule, ProductRequestModule, NotificationAdModule],
+  imports: [UsersModule, ProductsModule, ReviewsModule, OrderModule, ProductRequestModule, NotificationAdModule, UniandesClassModule],
   controllers: [AppController],
   providers: [AppService],
 })
