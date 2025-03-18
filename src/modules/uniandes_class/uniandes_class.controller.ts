@@ -1,18 +1,48 @@
-import { Controller, Post, Get, Param, Body } from '@nestjs/common';
-import { Uniandes_ClassService } from './uniandes_class.service';
-import { Uniandes_Class } from './uniandes_class.model';
+import { Controller, Post, Get, Put, Delete, Param, Body } from '@nestjs/common';
+import { UniandesClassService } from './uniandes_class.service';
+import { UniandesClass } from './uniandes_class.model';
 
-@Controller('uniandes_class')
-export class Uniandes_ClassController {
-    constructor(private readonly uniandes_ClassService: Uniandes_ClassService) {}
+@Controller('uniandes_classes')
+export class UniandesClassController {
+    constructor(private readonly UniandesClassService: UniandesClassService) { }
 
     @Post()
-    async createUniandes_Class(@Body() uniandes_Class: Uniandes_Class): Promise<void> {
-        return this.uniandes_ClassService.createUniandes_Class(uniandes_Class);
+    async createUniandesClass(@Body() uniandes_Class: UniandesClass): Promise<void> {
+        return this.UniandesClassService.createUniandesClass(uniandes_Class);
     }
 
     @Get(':id')
-    async getOrderById(@Param('id') id: number): Promise<Uniandes_Class | null> {
-        return this.uniandes_ClassService.getUniandes_ClassById(id);
+    async getClassById(@Param('id') id: string): Promise<UniandesClass | null> {
+        return this.UniandesClassService.getUniandesClassById(id);
+    }
+
+    @Put(':id')
+    async updateClass(@Param('id') id: string, @Body() data: Partial<UniandesClass>): Promise<void> {
+        return this.UniandesClassService.updateUniandesClass(id, data);
+    }
+
+    @Delete(':id')
+    async deleteClass(@Param('id') id: string): Promise<void> {
+        return this.UniandesClassService.deleteClass(id);
+    }
+
+    @Put(':id/product/:productId')
+    async addProductToClass(@Param('id') classId: string, @Param('productId') productId: string): Promise<void> {
+        return this.UniandesClassService.addProductToClass(classId, productId);
+    }
+
+    @Delete(':id/product/:productId')
+    async removeProductFromClass(@Param('id') classId: string, @Param('productId') productId: string): Promise<void> {
+        return this.UniandesClassService.removeProductFromClass(classId, productId);
+    }
+
+    @Get(':id/products')
+    async getProductsByClass(@Param('id') classId: string): Promise<any> {
+        return this.UniandesClassService.getProductsByClass(classId);
+    }
+
+    @Get('/product/:productId')
+    async getClassesByProduct(@Param('productId') productId: string): Promise<any> {
+        return this.UniandesClassService.getClassesByProduct(productId);
     }
 }

@@ -1,4 +1,4 @@
-export class Uniandes_Class {
-    id: number;
+export class UniandesClass {
+    id: string;
     class_name: string;
 }
