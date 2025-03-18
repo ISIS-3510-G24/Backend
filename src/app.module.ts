@@ -9,7 +9,7 @@ import { ProductRequestModule } from './modules/product_request/product_request.
 
 
 @Module({
-  imports: [UsersModule, ProductsModule, ReviewsModule, ProductRequestModule],
+  imports: [UsersModule, ProductsModule, ReviewsModule, OrderModule, ProductRequestModule],
   controllers: [AppController],
   providers: [AppService],
 })
