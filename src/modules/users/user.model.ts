@@ -10,5 +10,4 @@ export class User {
     wishlists: number[];
     status: UserState;
     subscription: SubscriptionStatus;
-  }
-  
+}
