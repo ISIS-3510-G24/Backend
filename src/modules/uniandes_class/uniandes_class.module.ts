@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { Uniandes_ClassController } from './uniandes_class.controller';
-import { Uniandes_ClassService } from './uniandes_class.service';
+import { UniandesClassController } from './uniandes_class.controller';
+import { UniandesClassService } from './uniandes_class.service';
 
 @Module({
-  controllers: [Uniandes_ClassController],
-  providers: [Uniandes_ClassService]
+  controllers: [UniandesClassController],
+  providers: [UniandesClassService]
 })
-export class Uniandes_ClassModule {}
+export class UniandesClassModule {}
