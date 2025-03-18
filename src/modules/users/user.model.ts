@@ -7,7 +7,8 @@ export class User {
     mail_address: string;
     profile_Picture: string;
     user_rating: number;
-    wishlists: number[];
+    wishlists: string[];
+    reviews: string[];
     status: UserState;
     subscription: SubscriptionStatus;
 }
