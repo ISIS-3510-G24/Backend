@@ -70,4 +70,40 @@ export class ReviewsService {
             reviews: admin.firestore.FieldValue.arrayRemove(reviewId),
         });
     }
+
+    async createUserReview(review: Review): Promise<void> {
+        const userRef = await this.db.collection('users').doc(review.reviewed_user_id).get();
+        if (!userRef.exists) {
+            throw new Error('User not found');
+        }
+
+        const reviewRef = await this.db.collection('reviews').add(review);
+
+        await this.db.collection('users').doc(review.reviewed_user_id).update({
+            reviews: admin.firestore.FieldValue.arrayUnion(reviewRef.id),
+        });
+    }
+
+    async getUserReviews(userId: string): Promise<Review[]> {
+        const snapshot = await this.db.collection('reviews')
+        .where('reviewed_user_id', '==', userId)
+        .get();
+    
+        return snapshot.docs.map(doc => doc.data() as Review);
+    }
+
+    async deleteUserReview(reviewId: string): Promise<void> {
+        const reviewRef = await this.db.collection('reviews').doc(reviewId).get();
+        if (!reviewRef.exists) {
+            throw new Error('Review not found');
+        }
+
+        const reviewData = reviewRef.data() as Review;
+
+        await this.db.collection('users').doc(reviewData.reviewed_user_id).update({
+            reviews: admin.firestore.FieldValue.arrayRemove(reviewId),
+        });
+
+        await this.db.collection('reviews').doc(reviewId).delete();
+    }
 }

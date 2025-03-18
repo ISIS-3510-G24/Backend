@@ -2,10 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { FirebaseService } from '../../config/firebase.config';
 import { User } from './user.model';
 import * as admin from 'firebase-admin';
+import { ReviewsService } from '../reviews/reviews.service';
 
 @Injectable()
 export class UsersService {
     private db = FirebaseService.getInstance().getFirestore();
+
+    constructor(private readonly reviewsService: ReviewsService) {}
 
     async createUser(user: User): Promise<void> {
         await this.db.collection('users').doc(user.id).set(user);
@@ -50,5 +53,17 @@ export class UsersService {
         await userRef.update({
             wishlists: admin.firestore.FieldValue.arrayRemove(productId)
         });
+    }
+
+    async updateUserRating(userId: string): Promise<void> {
+        const reviews = await this.reviewsService.getUserReviews(userId);
+        if (reviews.length === 0) {
+            await this.db.collection('users').doc(userId).update({ user_rating: 0 });
+            return;
+        }
+
+        const avgRating = reviews.reduce((sum, r) => sum + r.review_rating, 0) / reviews.length;
+
+        await this.db.collection('users').doc(userId).update({ user_rating: avgRating });
     }
 }
