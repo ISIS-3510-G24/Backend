@@ -8,14 +8,9 @@ export class ShoppingBagService {
     private db = FirebaseService.getInstance().getFirestore();
 
     async createShoppingBag(shoppingBag: ShoppingBag): Promise<void> {
-        const userRef = await this.db.collection('users').doc(shoppingBag.user_id).get();
-        if (!userRef.exists) {
-            throw new Error('User not found');
-        }
-
-        const shoppingBagRef = await this.db.collection('shopping_bags').add(shoppingBag);
-        await this.addShoppingToUser(shoppingBag.user_id, shoppingBagRef.id);
+        await this.db.collection('shopping_bags').doc(shoppingBag.id).set(shoppingBag);
     }
+
     async getShoppingBagById(id: string): Promise<ShoppingBag> {
         const doc = await this.db.collection('').doc(id).get();
         return doc.exists ? (doc.data() as ShoppingBag) : null;
@@ -26,15 +21,53 @@ export class ShoppingBagService {
     }
 
     async deleteShoppingBag(id: string): Promise<void> {
-        const shoppingRef = await this.db.collection('shopping_bags').doc(id).get();
-        if (!shoppingRef.exists) {
-            throw new Error('shopping not found');
+        await this.db.collection('shopping_bags').doc(id).delete();
+    }
+
+    async addProductToShoppingBag(bagId: string, product: { product_id: string, quantity: number }): Promise<void> {
+        const bagRef = this.db.collection('shopping_bags').doc(bagId);
+        const productRef = await this.db.collection('products').doc(product.product_id).get();
+        await bagRef.update({
+            products: admin.firestore.FieldValue.arrayUnion(product),
+            total_price: admin.firestore.FieldValue.increment(product.quantity * productRef.data().price)
+        });
+    }
+
+    async removeProductFromShoppingBag(bagId: string, product: { product_id: string, quantity: number }): Promise<void> {
+        const bagRef = this.db.collection('shopping_bags').doc(bagId);
+        const bag = await bagRef.get();
+
+        if (!bag.exists) {
+            throw new Error('Shopping bag not found');
         }
 
-        const shoppingData = shoppingRef.data() as ShoppingBag;
+        const bagData = bag.data();
+        const updatedProducts = bagData.products.filter(p => p.product_id !== product.product_id);
 
-        await this.removeShoppingFromUser(shoppingData.user_id, id);
-        await this.db.collection('shopping_bags').doc(id).delete();
+        await bagRef.update({
+            products: updatedProducts,
+            total_price: admin.firestore.FieldValue.increment(-product.quantity * bagData.products.find(p => p.product_id === product.product_id).quantity)
+        });
+    }
+
+    async clearBag(bagId: string): Promise<void> {
+        const bagRef = this.db.collection('shopping_bags').doc(bagId);
+        await bagRef.update({
+            products: [],
+            total_price: 0
+        });
+    }
+
+    async linkBagToOrder(bagId: string, orderId: string): Promise<void> {
+        await this.db.collection('shopping_bags').doc(bagId).update({
+            order_id: orderId
+        });
+    }
+
+    async unlinkBagFromOrder(bagId: string): Promise<void> {
+        await this.db.collection('shopping_bags').doc(bagId).update({
+            order_id: admin.firestore.FieldValue.delete()
+        });
     }
 
     async addShoppingToUser(userId: string, shoppingId: string): Promise<void> {
