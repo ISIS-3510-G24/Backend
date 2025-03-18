@@ -25,4 +25,14 @@ export class ProductsController {
     async deleteProduct(@Param('id') id: string): Promise<void> {
         return this.productsService.deleteProduct(id);
     }
+
+    @Put(':productId/reviews/:reviewId')
+    async addReviewToProduct(@Param('productId') productId: string, @Param('reviewId') reviewId: string): Promise<void> {
+        return this.productsService.addReviewToProduct(productId, reviewId);
+    }
+
+    @Delete(':productId/reviews/:reviewId')
+    async removeReviewFromProduct(@Param('productId') productId: string, @Param('reviewId') reviewId: string): Promise<void> {
+        return this.productsService.removeReviewFromProduct(productId, reviewId);
+    }
 }

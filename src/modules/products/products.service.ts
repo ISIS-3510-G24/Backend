@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { FirebaseService } from '../../config/firebase.config';
 import { Product } from './product.model';
+import * as admin from 'firebase-admin';
 
 @Injectable()
 export class ProductsService {
@@ -26,5 +27,19 @@ export class ProductsService {
 
     async deleteProduct(id: string): Promise<void> {
         await this.db.collection('products').doc(id).delete();
+    }
+
+    async addReviewToProduct(productId: string, reviewId: string): Promise<void> {
+        const productRef = this.db.collection('products').doc(productId);
+        await productRef.update({
+            reviews: admin.firestore.FieldValue.arrayUnion(reviewId)
+        });
+    }
+
+    async removeReviewFromProduct(productId: string, reviewId: string): Promise<void> {
+        const productRef = this.db.collection('products').doc(productId);
+        await productRef.update({
+            reviews: admin.firestore.FieldValue.arrayRemove(reviewId)
+        });
     }
 }
