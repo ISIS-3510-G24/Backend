@@ -1,7 +1,10 @@
 import { Module } from '@nestjs/common';
 import { UserState, SubscriptionStatus } from '../../common/enums';
+import { UsersController } from './users.controller';
 
-@Module({})
+@Module({
+  controllers: [UsersController]
+})
 export class UsersModule {
     id: number;
     username: string;
