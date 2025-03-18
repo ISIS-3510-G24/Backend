@@ -5,10 +5,11 @@ import { OrderModule } from './modules/order/order.module';
 import { UsersModule } from './modules/users/users.module';
 import { ProductsModule } from './modules/products/products.module';
 import { ReviewsModule } from './modules/reviews/reviews.module';
+import { ProductRequestModule } from './modules/product-request/product-request.module';
 
 
 @Module({
-  imports: [UsersModule, ProductsModule, ReviewsModule],
+  imports: [UsersModule, ProductsModule, ReviewsModule, ProductRequestModule],
   controllers: [AppController],
   providers: [AppService],
 })
