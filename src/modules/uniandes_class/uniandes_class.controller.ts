@@ -1,10 +1,10 @@
 import { Controller, Post, Get, Param, Body } from '@nestjs/common';
-import { Uniandes_ClassService } from './Uniandes_Class.service';
-import { Uniandes_Class } from './Uniandes_Class.model';
+import { Uniandes_ClassService } from './uniandes_class.service';
+import { Uniandes_Class } from './uniandes_class.model';
 
-@Controller('uniandes_Class')
+@Controller('uniandes_class')
 export class Uniandes_ClassController {
-    constructor(private readonly uniandes_ClassService: Uniandes_Class) {}
+    constructor(private readonly uniandes_ClassService: Uniandes_ClassService) {}
 
     @Post()
     async createUniandes_Class(@Body() uniandes_Class: Uniandes_Class): Promise<void> {
@@ -12,7 +12,7 @@ export class Uniandes_ClassController {
     }
 
     @Get(':id')
-    async getUniandes_ClassById(@Param('id') id: number): Promise<Uniandes_Class | null> {
+    async getOrderById(@Param('id') id: number): Promise<Uniandes_Class | null> {
         return this.uniandes_ClassService.getUniandes_ClassById(id);
     }
 }
