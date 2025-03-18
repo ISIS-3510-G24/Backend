@@ -17,7 +17,6 @@ export enum OrderStatus {
     PAYMENT_COMPLETE = 'Payment_complete',
 }
 
-}
 export enum ProductAvailability {
     AVAILABLE = 'available',
     NOT_AVAILABLE = 'not_available',
