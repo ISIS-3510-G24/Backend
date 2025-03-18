@@ -25,4 +25,14 @@ export class UsersController {
     async deleteUser(@Param('id') id: string): Promise<void> {
         return this.usersService.deleteUser(id);
     }
+
+    @Put(':id/reviews/:reviewId')
+    async addReviewToUser(@Param('id') userId: string, @Param('reviewId') reviewId: string): Promise<void> {
+        return this.usersService.addReviewToUser(userId, reviewId);
+    }
+
+    @Delete(':id/reviews/:reviewId')
+    async removeReviewFromUser(@Param('id') userId: string, @Param('reviewId') reviewId: string): Promise<void> {
+        return this.usersService.removeReviewFromUser(userId, reviewId);
+    }
 }
