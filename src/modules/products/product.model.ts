@@ -9,5 +9,6 @@ export class Product {
     prod_description: string;
     prod_characteristics: string[];
     prod_availability: ProductAvailability;
+    reviews: string[];
 }
   
