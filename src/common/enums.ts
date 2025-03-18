@@ -15,3 +15,4 @@ export enum SubscriptionStatus {
 export enum OrderStatus {
     UNFINISHED = 'Unfinished',
     PAYMENT_COMPLETE = 'Payment_complete',
+}
